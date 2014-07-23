@@ -12,11 +12,10 @@
     }
 
     .todo-container {
-      width: 800px;
+      width: 90%;
       margin: 0 auto;
-      background-color: #C7D0D5;
       height: 500px;
-      overflow-y: scroll;
+      overflow-y: auto;
       padding: 10px;
     }
 
@@ -29,28 +28,54 @@
     }
 
     .new-item-container {
-      width: 820px;
+      width: 90%;
       margin: 0 auto;
       padding-bottom: 10px;
     }
 
     .new-item {
-      width: 800px;
-      padding: 10px;
-      border: 1px solid #C7D0D5;
+      width: 80%;
       outline: none;
-      font-size: 18pt;
+      font-size:18px;
+      padding:10px 10px 10px 5px;
+      display:block;
+      border:none;
+      margin-top: 10px;
+      border-bottom:1px solid #757575;
+      background: none;
+    }
+
+    .new-item:focus {
+      border-bottom:1px solid #4059A9;
+    }
+
+    .toolbar {
+      background: #1a237e;
+      height: 64px;
+      width: 100%;
+      color: white;
+    }
+
+    .toolbar h1 {
+      font-weight: 300;
+      margin: 0 14px 8px;
+      line-height: 64px;
+      font-size: 1.3em;
     }
   </style>
 
-  <h1>Componentized TODO</h1>
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <h1>A Simple Todo App</h1>
+  </div>
 
   <!-- Input field for new todo item -->
   <div class="new-item-container">
-    <input type="text" class="new-item" placeholder="Do the dishes" />  
+    <input type="text" class="new-item" placeholder="What would you like to do?" />
   </div>
 
   <!-- render the list of todo items -->
+  <!--<div class="todo-container"></div>-->
   <div class="todo-container"></div>
 
 </template>
@@ -59,13 +84,14 @@
 
 <script>
   (function(document){
-    
+
     var TodoAppController = function(context){
       // save the context to the custom element
       this.context = context;
 
       // Create an empty collection for the todo items
-      this.collection = [];
+      // or load existing todos from localStorage
+      this.collection = JSON.parse(localStorage.getItem('todos')) || [];
 
       // Create a shadow root
       this.shadow = this.context.createShadowRoot();
@@ -84,23 +110,21 @@
     TodoAppController.prototype.setupListeners = function(){
       // Get a reference to the input field inside our shadow DOM
       var input = this.shadow.querySelector("input.new-item");
-      var self  = this;
 
       // Attach a event listener to our input element
       input.addEventListener('keydown', function(e){
-        
+
         if(e.which == 13){ // return key hit
           if(input.value.trim() == "") return;
 
           // Add our item
-          self.addItem(input.value);
+          this.addItem(input.value);
 
           // Empty our input view
           input.value = "";
         }
 
-      });
-
+      }.bind(this));
     };
 
     TodoAppController.prototype.addItem = function(title, done){
@@ -140,16 +164,16 @@
         // Append child to the container inside the shadow dom
         todoContainer.appendChild(todoItem);
       }
-      
+      localStorage.setItem('todos', JSON.stringify(this.collection));
     };
 
-    /////////////// Register the element in the document
+    // Register the element in the document
     var TodoApp = Object.create(HTMLElement.prototype);
     TodoApp.createdCallback = function(){
       this.controller = new TodoAppController(this);
     };
 
-    // register out todo-item tag with the document
+    // Register our todo-item tag with the document
     document.registerElement('todo-app', {prototype: TodoApp});
 
   })(document.currentScript.ownerDocument);
