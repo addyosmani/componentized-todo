@@ -62,11 +62,22 @@
       line-height: 64px;
       font-size: 1.3em;
     }
+
+    .toolbar.bottom {
+      position: fixed;
+      bottom: 0;
+      color: white;
+      padding: 5px 5px 35px 5px;
+    }
+
+    .toolbar a {
+      color: #E1F5FE;
+    }
   </style>
 
   <!-- Toolbar -->
   <div class="toolbar">
-    <h1>A Simple Todo App</h1>
+    <h1>Web Components <strong>Todos</strong></h1>
   </div>
 
   <!-- Input field for new todo item -->
@@ -78,9 +89,15 @@
   <!--<div class="todo-container"></div>-->
   <div class="todo-container"></div>
 
+
+  <!-- Toolbar -->
+  <div class="toolbar bottom">
+    <p>A demo using <strong>native</strong> Custom Elements, Shadow DOM, HTML Imports and &lt;template&gt; &amp; localStorage. Thx to <a href="https://github.com/Tmw">Tmw</a> for starting this. <a href="https://github.com/addyosmani/componentized-todo">Source</a></p>
+  </div>
+
 </template>
 
-<!-- JS - Interaction -->
+<!-- Interaction -->
 
 <script>
   (function(document){
@@ -145,8 +162,12 @@
     };
 
     TodoAppController.prototype.renderList = function(){
+      // Note: renderList() can be significantly optimized. Leaving
+      // as a Todo for now.
+      
       // Get a reference to the todo container within the shadow DOM
       var todoContainer = this.shadow.querySelector(".todo-container");
+      var self = this;
 
       // Clear current content
       while(todoContainer.firstChild){
@@ -160,10 +181,23 @@
 
         // Set the content of the tag
         todoItem.innerHTML = this.collection[i].title;
+        // Set the done state of the todo item
+        todoItem.shadowRoot.querySelector('input').checked = this.collection[i].done;
+        todoItem.id = i;
+
+        // Event handlers for todo items
+        todoItem.addEventListener('click', function(e){
+          var entry = self.collection[this.id];
+          var done = this.shadowRoot.querySelector('input').checked;
+          entry.done = done;
+          self.collection[this.id] = entry;
+          localStorage.setItem('todos', JSON.stringify(self.collection));
+        });
 
         // Append child to the container inside the shadow dom
         todoContainer.appendChild(todoItem);
       }
+
       localStorage.setItem('todos', JSON.stringify(this.collection));
     };
 
