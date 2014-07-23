@@ -8,11 +8,12 @@
   <!-- component styling -->
   <style>
     :host {
-      background-color: #FCEEEA;
       display: block;
       padding: 10px;
-
       transition: background-color .2s;
+      font-size: 1.2em;
+      color: #111;
+      font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
     }
 
     :host:done {
@@ -58,24 +59,25 @@
 
     TodoItemController.prototype.setupListeners = function(){
       // get a reference to our checkbox inside the Shadow DOM
-      var checkbox = this.shadow.querySelector("input[type='checkbox']"),
-          self = this;
+      var checkbox = this.shadow.querySelector("input[type='checkbox']");
 
       // Attach event listener
       checkbox.addEventListener('click', function(e){
-        self.checkboxClicked(e);
-      });
+        this.checkboxClicked(e);
+      }.bind(this));
     };
 
     TodoItemController.prototype.checkboxClicked = function(e){
       var checkbox = this.shadow.querySelector("input[type='checkbox']");
-      
-      if(checkbox.checked)
+
+      if(checkbox.checked) {
         this.context.setAttribute('done', 'done');
-      else
-       this.context.removeAttribute('done'); 
+      }
+      else {
+       this.context.removeAttribute('done');
+      }
     };
-    
+
     TodoItemController.prototype.toggleDone = function(isDone){
       this.shadow.querySelector("p.title").classList.toggle('done', isDone);
 
@@ -88,15 +90,16 @@
     };
 
     TodoItemController.prototype.attributeChangedCallback = function(attr, oldVal, newVal){
-      if(attr == "done")
+      if(attr == "done"){
         this.toggleDone(!!newVal);
+      }
     };
 
     TodoItemController.prototype.attachedCallback = function(){
       this.toggleDone(this.context.hasAttribute('done'));
     };
 
-    /////////////// Register the element in the document
+    // Register the element in the document
     var TodoItem = Object.create(HTMLElement.prototype);
     TodoItem.createdCallback = function(){
       this.controller = new TodoItemController(this);
@@ -111,7 +114,7 @@
     };
 
     // register out todo-item tag with the document
-    window.document.registerElement('todo-item', {prototype: TodoItem});
+    document.registerElement('todo-item', {prototype: TodoItem});
 
 })(document.currentScript.ownerDocument);
 </script>
