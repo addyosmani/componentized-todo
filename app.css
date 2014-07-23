@@ -1,12 +1,13 @@
 body {
   margin: 0px;
   padding: 0px;
-  background-color: #F5F5F5;
-  font-family: arial;
+  background-color: #e8eaf6;
+  font-family: 'RobotoDraft', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 300;
 }
 
 todo-app{
-  width: 800px;
+  width: 100%;
   margin: 0 auto;
   display: block;
 }
