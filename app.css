@@ -11,3 +11,7 @@ todo-app{
   margin: 0 auto;
   display: block;
 }
+
+p.fallback {
+	padding: 10px;
+}
