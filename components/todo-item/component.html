@@ -70,10 +70,10 @@
     TodoItemController.prototype.checkboxClicked = function(e){
       var checkbox = this.shadow.querySelector("input[type='checkbox']");
 
-      if(checkbox.checked) {
+      if(checkbox.checked){
         this.context.setAttribute('done', 'done');
       }
-      else {
+      else{
        this.context.removeAttribute('done');
       }
     };
