@@ -1,43 +1,7 @@
 <!DOCTYPE html>
 
 <!-- HTML -->
-<template id="template">
-  <p class="inline checkbox"><input type="checkbox"></p>
-  <p class="inline title"><content></content></p>
-
-  <!-- component styling -->
-  <style>
-    :host {
-      display: block;
-      padding: 10px;
-      transition: background-color .2s;
-      font-size: 1.2em;
-      color: #111;
-      font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-    }
-
-    :host:done {
-      background-color: red
-    }
-
-    .inline{
-      display: inline;
-    }
-
-    .title{
-      font-weight: bold;
-    }
-
-    .title.done{
-      text-decoration: line-through;
-    }
-
-    :host:hover{
-      background-color: #E9F8FC;
-    }
-  </style>
-
-</template>
+<!-- (moved to index.html) -->
 
 <!-- JS - Interaction -->
 <script>
@@ -50,7 +14,7 @@
       this.shadow = context.createShadowRoot();
 
       // stamp out our template in the shadow dom
-      var template = document.querySelector("#template").content.cloneNode(true);
+      var template = document.querySelector("#todo-item-template").content.cloneNode(true);
       this.shadow.appendChild(template);
 
       // Pick the checkbox
@@ -116,5 +80,5 @@
     // register out todo-item tag with the document
     document.registerElement('todo-item', {prototype: TodoItem});
 
-})(document.currentScript.ownerDocument);
+})(document);
 </script>
