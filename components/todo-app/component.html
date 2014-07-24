@@ -164,7 +164,7 @@
     TodoAppController.prototype.renderList = function(){
       // Note: renderList() can be significantly optimized. Leaving
       // as a Todo for now.
-      
+
       // Get a reference to the todo container within the shadow DOM
       var todoContainer = this.shadow.querySelector(".todo-container");
       var self = this;
@@ -182,6 +182,7 @@
         // Set the content of the tag
         todoItem.innerHTML = this.collection[i].title;
         // Set the done state of the todo item
+        this.collection[i].done && todoItem.setAttribute('done', 'done');
         todoItem.shadowRoot.querySelector('input').checked = this.collection[i].done;
         todoItem.id = i;
 
