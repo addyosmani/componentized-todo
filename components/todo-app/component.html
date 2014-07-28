@@ -210,5 +210,5 @@
     // Register our todo-item tag with the document
     document.registerElement('todo-app', {prototype: TodoApp});
 
-  })(document, document._currentScript.ownerDocument);
+  })(document, (document._currentScript || document.currentScript).ownerDocument);
 </script>

@@ -116,5 +116,5 @@
     // register out todo-item tag with the document
     document.registerElement('todo-item', {prototype: TodoItem});
 
-})(document, document._currentScript.ownerDocument);
+})(document, (document._currentScript || document.currentScript).ownerDocument);
 </script>
