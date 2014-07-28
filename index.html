@@ -6,13 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href='//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en' rel='stylesheet'>
 
+  <script>
+    if ('registerElement' in document
+      && 'createShadowRoot' in HTMLElement.prototype
+      && 'import' in document.createElement('link')
+      && 'content' in document.createElement('template')) {
+      // We're using a browser with native WC support!
+    } else {
+      document.write('<script src="https:\/\/cdnjs.cloudflare.com/ajax/libs/polymer/0.3.4/platform.js"><\/script>')
+    }
+  </script>
   <link rel="import" href="components/todo-app/component.html">
 </head>
 <body>
   <todo-app>
   	<p class="fallback">
   	Whoops. Your browser doesn't support one or more of the Web Component
-  	features needed to run this demo. Work is underway in Firefox, Safari 
+  	features needed to run this demo. Work is underway in Firefox, Safari
   	and (possibly) IE to change that. Chrome 36+ should run this demo fine
   	for now. Maybe next time!</p>
   </todo-app>

@@ -100,7 +100,7 @@
 <!-- Interaction -->
 
 <script>
-  (function(document){
+  (function(document, owner){
 
     var TodoAppController = function(context){
       // save the context to the custom element
@@ -114,7 +114,7 @@
       this.shadow = this.context.createShadowRoot();
 
       // stamp out our template in the shadow dom
-      var template = document.querySelector("#template").content.cloneNode(true);
+      var template = owner.querySelector("#template").content.cloneNode(true);
       this.shadow.appendChild(template);
 
       // Setup event listener
@@ -211,5 +211,5 @@
     // Register our todo-item tag with the document
     document.registerElement('todo-app', {prototype: TodoApp});
 
-  })(document.currentScript.ownerDocument);
+  })(document, (document._currentScript || document.currentScript).ownerDocument);
 </script>

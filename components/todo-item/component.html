@@ -41,7 +41,7 @@
 
 <!-- JS - Interaction -->
 <script>
-  (function(document){
+  (function(document, owner){
 
     var TodoItemController = function(context){
       this.context = context;
@@ -50,7 +50,7 @@
       this.shadow = context.createShadowRoot();
 
       // stamp out our template in the shadow dom
-      var template = document.querySelector("#template").content.cloneNode(true);
+      var template = owner.querySelector("#template").content.cloneNode(true);
       this.shadow.appendChild(template);
 
       // Pick the checkbox
@@ -116,5 +116,5 @@
     // register out todo-item tag with the document
     document.registerElement('todo-item', {prototype: TodoItem});
 
-})(document.currentScript.ownerDocument);
+})(document, (document._currentScript || document.currentScript).ownerDocument);
 </script>
